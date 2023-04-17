@@ -1,5 +1,10 @@
 <template>
   <!-- component -->
+  <img
+    src="../assets/leg8.png"
+    class="hidden md:block lg:hidden"
+    alt="Imagem para dispositivos móveis"
+  />
   <div class="h-screen md:flex">
     <div
       class="relative overflow-hidden md:flex w-1/2 bg-gradient-to-tr from-neutral-300 to-gray-100 i justify-around items-center hidden"
@@ -21,7 +26,10 @@
       ></div>
     </div>
     <div class="flex md:w-1/2 justify-center py-10 items-center bg-white">
-      <form class="bg-white">
+      <form class="bg-white mx-auto w-4/5 md:w-auto md:max-w-md">
+        <div class="flex justify-center md:justify-start mb-10">
+          <img src="../assets/leg8.png" alt="Logo" class="h-20 md:hidden" />
+        </div>
         <h1 class="text-gray-800 font-bold text-2xl mb-1">Bem vindo!</h1>
         <p class="text-sm font-bold text-orange-600 mb-7">Leg8 Serviços</p>
         <div class="flex items-center border-2 py-2 px-3 rounded-2xl mb-4">
