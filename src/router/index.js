@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from "vue-router";
 import Login from "../views/Login.vue";
 import Form from "../views/Form.vue";
 import Page from "../views/site.vue";
+import Registros from "../views/Registros.vue"
 
 const routes = [
   {
@@ -18,6 +19,12 @@ const routes = [
     path: "/form",
     name: "Form",
     component: Form,
+  },
+  {
+    props: true,
+    path: "/registros",
+    name: "Registros",
+    component: Registros,
   },
 ];
 const router = Router();
