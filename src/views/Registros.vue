@@ -49,7 +49,7 @@
         <table
           class="table table-secondary table-light table-sm table-bordered table-hover"
         >
-          <thead class="thead-dark">
+          <thead>
             <tr>
               <th scope="col">Título</th>
               <th scope="col">Local</th>
