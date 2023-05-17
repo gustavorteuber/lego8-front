@@ -47,32 +47,36 @@
       <h1 class="text-2xl font-bold text-center">Registros</h1>
       <div class="table-responsive">
         <table
-          class="table table-secondary table-light table-sm table-bordered table-hover"
+          class="table table-secondary table-striped table-light table-sm table-bordered table-hover"
         >
           <thead>
-            <tr>
-              <th scope="col">Título</th>
-              <th scope="col">Local</th>
-              <th scope="col">Defeito</th>
-              <th scope="col">Quantidade Total</th>
-              <th scope="col">Aprovados</th>
-              <th scope="col">Rejeitados</th>
-              <th scope="col">Retrabalhados</th>
-              <th scope="col">Operadores</th>
-              <th scope="col">Data</th>
-              <th scope="col">Ações</th>
+            <tr class="table-dark">
+              <th scope="col" class="text-white bg-orange-500">Título</th>
+              <th scope="col" class="text-white bg-orange-500">Local</th>
+              <th scope="col" class="text-white bg-orange-500">Defeito</th>
+              <th scope="col" class="text-white bg-orange-500">
+                Quantidade Total
+              </th>
+              <th scope="col" class="text-white bg-orange-500">Aprovados</th>
+              <th scope="col" class="text-white bg-orange-500">Rejeitados</th>
+              <th scope="col" class="text-white bg-orange-500">
+                Retrabalhados
+              </th>
+              <th scope="col" class="text-white bg-orange-500">Operadores</th>
+              <th scope="col" class="text-white bg-orange-500">Data</th>
+              <th scope="col" class="text-white bg-orange-500">Ações</th>
             </tr>
           </thead>
           <tbody>
             <tr v-for="registro in registros" :key="registro.id">
               <td class="font-bold">{{ registro.titulo }}</td>
-              <td class="font-bold">{{ registro.local }}</td>
-              <td class="font-bold">{{ registro.defeito }}</td>
-              <td class="font-bold">{{ registro.quantidade_total }}</td>
-              <td class="font-bold">{{ registro.aprovados }}</td>
-              <td class="font-bold">{{ registro.rejeitados }}</td>
-              <td class="font-bold">{{ registro.retrabalhados }}</td>
-              <td class="font-bold">
+              <td>{{ registro.local }}</td>
+              <td>{{ registro.defeito }}</td>
+              <td>{{ registro.quantidade_total }}</td>
+              <td>{{ registro.aprovados }}</td>
+              <td>{{ registro.rejeitados }}</td>
+              <td>{{ registro.retrabalhados }}</td>
+              <td>
                 <span
                   v-for="operador in registro.operadores"
                   :key="operador.id"
@@ -80,7 +84,7 @@
                   {{ operador.username }}&nbsp;
                 </span>
               </td>
-              <td class="font-bold">{{ registro.data }}</td>
+              <td>{{ registro.data }}</td>
               <td>
                 <button
                   @click="abrirModal(registro)"
@@ -212,9 +216,13 @@ export default {
 
     abrirModal(registro) {
       this.registroOperadorMap = {};
-      this.registro = registro; // Definir o registro atual
+      this.registro = registro;
 
-      registro.operadores.forEach((operador) => {
+      const operadores = Array.isArray(registro.operadores)
+        ? registro.operadores
+        : [registro.operadores];
+
+      operadores.forEach((operador) => {
         const registroOperador = this.getRegistroOperador(operador.id);
         if (registroOperador) {
           this.registroOperadorMap[operador.id] = {
@@ -238,9 +246,15 @@ export default {
     salvarHora(registro) {
       const registrosOperadores = this.operadores.map((operador) => {
         const registroOperador = this.getRegistroOperador(operador.id);
-        if (!registroOperador.hora_inicio || !registroOperador.hora_fim) {
+        if (
+          !registroOperador.hora_inicio ||
+          !registroOperador.hora_fim ||
+          registroOperador.hora_inicio === "" ||
+          registroOperador.hora_fim === ""
+        ) {
           const toast = useToast();
           toast.error("Preencha todos os campos!");
+          return null;
         }
         return {
           id: registroOperador.id,
@@ -269,7 +283,7 @@ export default {
           toast.success("Horas de trabalho atualizadas com sucesso");
           console.log("Horas de trabalho atualizadas com sucesso");
           this.registroOperadorMap = {};
-          this.carregarRegistros(); // Recarrega os registros após a atualização bem-sucedida
+          this.carregarRegistros();
         })
         .catch((error) => {
           console.error(error);
